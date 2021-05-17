@@ -88,7 +88,6 @@ function view(model){
     table: getQuestion(model)
   }
 }
-console.log(getTitle())
 module.exports = {
   EmptyTable,
   view,

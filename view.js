@@ -2,6 +2,7 @@ var prompt = require('prompt-sync')({sigint:true});
 const figlet = require('figlet');
 const chalk = require('chalk');  
 const inquirer = require('inquirer')
+const model = require('./model');
 const { printTable } = require('console-table-printer');
 
 function getTitle(){
@@ -22,8 +23,8 @@ function getTitle(){
   if(azar > 0.8 && azar <= 1){
     mess ='Big Money-sw'
   }
-  return chalk.greenBright(
-    figlet.textSync('TIP - CALCULATOR',
+  return chalk.yellow(
+    figlet.textSync('UNIT - CONVERT',
       {
         horizontalLayout: 'full',
         font: mess
@@ -33,61 +34,69 @@ function getTitle(){
 }
 function EmptyTable(){
   const tableview = [
-    {bill_amount: 0,'tip (%)': chalk.green(0 +'%'), tip: chalk.yellow(0*0/100), total: chalk.cyan(0+0*0/100)}
+    {
+      LeftValue: chalk.green(0),LeftUnit: chalk.green('celcius'), RightValue: chalk.yellow(32), RightUnit: chalk.yellow('farenheit')
+    }
   ]
   printTable(tableview);
 }
 
-function getQuestion(question){
-    const {billAmount,porcentual} = question
-    let nbill = parseInt(billAmount);
-    let nporcentual = parseFloat(porcentual)
+function getTableTemperature(model){
+    const {LeftValue,RightValue,LeftUnit,RightUnit} = model
+    let nLeftValue = parseFloat(LeftValue);
+    let nRightValue = parseFloat(RightValue)
     return [
       {
-        'bill amount': '$'+billAmount, 'tip (%)':porcentual+ '%','tip':'$'+chalk.yellow(nbill*nporcentual/100),'total':'$'+chalk.cyan(nbill+nbill*nporcentual/100)
+        LeftValue: chalk.green(nLeftValue),LeftUnit: chalk.green(LeftUnit), RightValue: chalk.yellow(nRightValue), RightUnit: chalk.yellow(RightUnit)
       }
     ]
 }
-function ValueQuestion(question){
-  const {billAmount,porcentual} = question
-  const message = 'bill amount'
-  const message2 ='tip'
+function ValueQuestion(model){
+  const {LeftValue,RightValue,LeftUnit,RightUnit} = model
+  const message1 = 'Left temperature is source? '
+  const message2 ='Temperature value to convert?'
+  const message3 = 'From'
+  const message4 = 'To'
+  const option = ['Celsius', 'Fahrenheit', 'Kelvin', ' ']
   return inquirer.prompt([
     {
-      name: 'billAmount',
-      type: 'number',
-      message: message,
-      default: billAmount,
+      name: 'option',
+      type: 'confirm',
+      message: message1,
+      default: "Y/N",
       
-      validate: function(value){
-        if(value >= 0){
-            return true
-        } else {
-            return 0
-        }
-    }
     },
     {
-      name: 'porcentual',
-      type: 'number',
+      name: 'temperature',
+      type: 'input',
       message: message2,
-      default: porcentual,
-      validate: function(value){
-        if(value != 0){
-            return true
-        } else {
-            return ''
-        }
-    }
+      default: LeftValue,
+    },
+    {
+      type: 'list',
+      name: 'unit',
+      message: message3,
+      default: 'use arrows keys',
+      choices: option
+    },
+    {
+      type: 'list',
+      name: 'ToUnit',
+      message: message4,
+      default: 'use arrows keys',
+      choices: option
     }
   ])
 }
 function view(model){
   return {
     title: getTitle(),
-    table: getQuestion(model)
+    table: getTableTemperature(model)
   }
 }
+console.log(getTitle())
+console.log(printTable(getTableTemperature(model)))
+console.log(ValueQuestion(model))
 module.exports = {
   EmptyTable,
   view,

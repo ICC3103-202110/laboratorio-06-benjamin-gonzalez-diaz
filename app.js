@@ -10,6 +10,7 @@ async function App(status,update,view){
         console.clear()
         console.log(title)
         printTable(table)
+        console.log('                                                       para salir ponga ctrl^C')
         const {convert,unit,temperature,option} = await (ValueQuestion(model))
         const UpdateValues = update(option,temperature, unit,convert,model)
         status = {

@@ -70,7 +70,7 @@ function ValueQuestion(model){
       name: 'temperature',
       type: 'input',
       message: message2,
-      default: LeftValue,
+      default: parseFloat(LeftValue),
     },
     {
       type: 'list',

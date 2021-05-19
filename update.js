@@ -37,7 +37,7 @@ function Update(option,temperature,unit,convert,Model){
         NewTemp = CelsiusRankine(temperature)
     }
     else if(unit === 'Kelvin' && convert === 'Celsius'){
-        newTemp = KelvinCelsius(temperature)
+        NewTemp = KelvinCelsius(temperature)
     }
     else if(unit === 'Kelvin' && convert === 'Fahrenheit'){
         NewTemp = KelvinFahrenheit(temperature)

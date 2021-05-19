@@ -61,7 +61,7 @@ function ValueQuestion(model){
   return inquirer.prompt([
     {
       name: 'option',
-      type: 'confirm',
+      type: 'input',
       message: message1,
       default: "Y/N",
       
@@ -81,7 +81,7 @@ function ValueQuestion(model){
     },
     {
       type: 'list',
-      name: 'ToUnit',
+      name: 'convert',
       message: message4,
       default: 'use arrows keys',
       choices: option
@@ -94,9 +94,6 @@ function view(model){
     table: getTableTemperature(model)
   }
 }
-console.log(getTitle())
-console.log(printTable(getTableTemperature(model)))
-console.log(ValueQuestion(model))
 module.exports = {
   EmptyTable,
   view,

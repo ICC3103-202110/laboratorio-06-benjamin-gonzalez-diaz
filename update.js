@@ -23,7 +23,7 @@ function FahrenheitCelsius(temp){
     return parseFloat(( temp - 32) * 5/9)
 }
 function FahrenheitRankine(temp){
-    return parseFloat((temp + 459.67))
+    return parseFloat((parseFloat(temp) + 459.67))
 }
 function Update(option,temperature,unit,convert,Model){
     if(unit === 'Celsius' && convert === 'Fahrenheit'){
@@ -57,7 +57,7 @@ function Update(option,temperature,unit,convert,Model){
         NewTemp = FahrenheitRankine(temperature)
     }
     else if(unit === ' ' && convert === 'Celsius'){
-        convert = 'Rankine'
+        unit = 'Rankine'
         NewTemp = ((temperature - 491.67) * 5/9)
     }
     else if(unit === ' ' && convert === 'Kelvin'){
@@ -67,6 +67,11 @@ function Update(option,temperature,unit,convert,Model){
     else if(unit === ' ' && convert === 'Fahrenheit'){
         unit = 'Rankine'
         NewTemp = (temperature - 459.67 )
+    }
+    else if(unit === ' ' && convert === ' '){
+        unit = 'Rankine'
+        convert = 'Rankine'
+        NewTemp = temperature
     }
     else{
         NewTemp = temperature
